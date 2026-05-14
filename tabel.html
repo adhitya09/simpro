@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RFC Table with Progress Update</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+
+      .yellow-header {
+        background-color: #ffd700;
+      }
+
+      .action-btn {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      .action-btn:hover {
+        background-color: #45a049;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      .form-container {
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin: 10px 0;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="datetime-local"],
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .status {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .status .completed {
+        color: green;
+      }
+
+      .status .in-progress {
+        color: orange;
+      }
+
+      .status .not-started {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>RFC Progress Table</h1>
+
+      <!-- Table for RFC -->
+      <table id="rfcTable">
+        <thead>
+          <tr class="yellow-header">
+            <th>No</th>
+            <th>No RFC</th>
+            <th>Work Item</th>
+            <th>Update Progress</th>
+            <th>Upload</th>
+            <th>Bobot</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Static Data Rows for demonstration -->
+          <tr>
+            <td>1</td>
+            <td>RFC-001</td>
+            <td>Sentralisasi CCTV</td>
+            <td class="status">
+              <span class="completed">Completed</span>
+            </td>
+            <td>File1.pdf</td>
+            <td>80%</td>
+            <td>
+              <button class="action-btn" onclick="updateProgress(this)">
+                Update Progress
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>RFC-002</td>
+            <td>Penggantian Kabel</td>
+            <td class="status">
+              <span class="in-progress">In Progress</span>
+            </td>
+            <td>File2.pdf</td>
+            <td>60%</td>
+            <td>
+              <button class="action-btn" onclick="updateProgress(this)">
+                Update Progress
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>RFC-003</td>
+            <td>Pemeliharaan Server</td>
+            <td class="status">
+              <span class="not-started">Not Started</span>
+            </td>
+            <td>File3.pdf</td>
+            <td>40%</td>
+            <td>
+              <button class="action-btn" onclick="updateProgress(this)">
+                Update Progress
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Function to update the progress of the task
+      function updateProgress(button) {
+        const row = button.closest("tr");
+        const statusCell = row.cells[3];
+        const progressCell = row.cells[5];
+
+        // Show a prompt to enter the new progress
+        const newProgress = prompt(
+          "Enter the new progress (Completed, In Progress, Not Started):"
+        );
+
+        if (newProgress) {
+          // Update the status and progress in the row
+          const statusSpan = statusCell.querySelector("span");
+
+          // Remove old class
+          statusSpan.classList.remove(
+            "completed",
+            "in-progress",
+            "not-started"
+          );
+
+          // Apply the new class based on the progress
+          if (newProgress.toLowerCase() === "completed") {
+            statusSpan.classList.add("completed");
+            statusSpan.textContent = "Completed";
+            progressCell.textContent = "100%";
+          } else if (newProgress.toLowerCase() === "in progress") {
+            statusSpan.classList.add("in-progress");
+            statusSpan.textContent = "In Progress";
+            progressCell.textContent = "60%";
+          } else if (newProgress.toLowerCase() === "not started") {
+            statusSpan.classList.add("not-started");
+            statusSpan.textContent = "Not Started";
+            progressCell.textContent = "0%";
+          } else {
+            alert("Invalid status entered.");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
